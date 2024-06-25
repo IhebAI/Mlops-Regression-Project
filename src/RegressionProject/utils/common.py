@@ -1,4 +1,6 @@
 import os
+import pickle
+
 from box.exceptions import BoxValueError
 import yaml
 from RegressionProject.logging import logger
@@ -94,6 +96,28 @@ def save_bin(data: Any, path: Path):
     """
     joblib.dump(value=data, filename=path)
     logger.info(f"binary file saved at: {path}")
+
+
+def save_object_pkl(file_path, obj):
+    try:
+        dir_path = os.path.dirname(file_path)
+
+        os.makedirs(dir_path, exist_ok=True)
+
+        with open(file_path, "wb") as file_obj:
+            pickle.dump(obj, file_obj)
+
+    except Exception as e:
+        raise e
+
+
+def load_object_pkl(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return pickle.load(file_obj)
+
+    except Exception as e:
+        raise e
 
 
 @ensure_annotations

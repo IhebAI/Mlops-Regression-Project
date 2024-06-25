@@ -46,12 +46,21 @@ class ConfigurationManager:
 
     def get_data_transformation_config(self) -> DataTransformationConfig:
         config = self.config.data_transformation
+        schema = self.schema
 
         create_directories([config.root_dir])
 
         data_transformation_config = DataTransformationConfig(
             root_dir=config.root_dir,
             data_path=config.data_path,
+            data_train=config.data_train,
+            data_test=config.data_test,
+            transformed_data_train=config.transformed_data_train,
+            transformed_data_test=config.transformed_data_test,
+            preprocessor_obj_file_path=config.preprocessor_obj_file_path,
+            numerical_columns=config.numerical_columns,
+            categorical_columns=config.categorical_columns,
+            target_column=schema.TARGET_COLUMN.name
         )
 
         return data_transformation_config

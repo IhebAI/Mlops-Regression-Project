@@ -8,17 +8,23 @@ data_ingestion:
   unzip_dir: artifacts/data_ingestion
 
 
-
 data_validation:
   root_dir: artifacts/data_validation
   unzip_data_dir: artifacts/data_ingestion/student.csv
   STATUS_FILE: artifacts/data_validation/status.txt
 
 
-
 data_transformation:
   root_dir: artifacts/data_transformation
   data_path: artifacts/data_ingestion/student.csv
+  data_train: artifacts/data_transformation/train.csv
+  data_test: artifacts/data_transformation/test.csv
+  transformed_data_train: artifacts/data_transformation/transformed_train_data.csv
+  transformed_data_test: artifacts/data_transformation/transformed_test_data.csv
+  preprocessor_obj_file_path: artifacts/data_transformation/preprocessor.pkl
+  numerical_columns: [ "writing_score", "reading_score" ]
+  categorical_columns: [ "gender", "race_ethnicity", "parental_level_of_education", "lunch", "test_preparation_course"]
+
 
 
 

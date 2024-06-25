@@ -1,6 +1,4 @@
-
 from pathlib import Path
-
 from RegressionProject.components.data_transformation import DataTransformation
 from RegressionProject.config.configuration import ConfigurationManager
 
@@ -20,7 +18,7 @@ class DataTransformationTrainingPipeline:
                 config = ConfigurationManager()
                 data_transformation_config = config.get_data_transformation_config()
                 data_transformation = DataTransformation(config=data_transformation_config)
-                data_transformation.train_test_splitting()
+                data_transformation.run_data_processing_pipeline()
 
             else:
                 raise Exception("You data schema is not valid")

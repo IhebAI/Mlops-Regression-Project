@@ -21,3 +21,11 @@ class DataValidationConfig:
 class DataTransformationConfig:
     root_dir: Path
     data_path: Path
+    data_train: Path
+    data_test: Path
+    transformed_data_train: Path
+    transformed_data_test: Path
+    preprocessor_obj_file_path: Path
+    numerical_columns: list
+    categorical_columns: list
+    target_column: str
