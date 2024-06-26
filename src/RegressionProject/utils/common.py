@@ -9,7 +9,6 @@ import joblib
 from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path
-from typing import Any
 
 
 @ensure_annotations
@@ -83,7 +82,7 @@ def load_json(path: Path) -> ConfigBox:
 
 
 @ensure_annotations
-def save_bin(data: Any, path: Path):
+def save_bin(data, path: Path):
     """save binary file
 
     Args:
@@ -93,9 +92,15 @@ def save_bin(data: Any, path: Path):
     joblib.dump(value=data, filename=path)
     logger.info(f"binary file saved at: {path}")
 
-
+@ensure_annotations
 def save_object_pkl(file_path, obj):
+    """
+    Saves an object as a pickle file.
 
+    Args:
+        file_path (Path): Path to the pickle file.
+        obj (Any): Object to be saved.
+    """
     try:
         dir_path = os.path.dirname(file_path)
 
@@ -109,7 +114,17 @@ def save_object_pkl(file_path, obj):
         raise e
 
 
-def load_object_pkl(file_path):
+@ensure_annotations
+def load_object_pkl(file_pathpath: Path):
+    """
+    Loads an object from a pickle file.
+
+    Args:
+        file_path (Path): Path to the pickle file.
+
+    Returns:
+        Any: The loaded object.
+    """
     try:
         with open(file_path, "rb") as file_obj:
             return pickle.load(file_obj)
@@ -119,7 +134,7 @@ def load_object_pkl(file_path):
 
 
 @ensure_annotations
-def load_bin(path: Path) -> Any:
+def load_bin(path: Path):
     """load binary data
 
     Args:
@@ -146,8 +161,17 @@ def get_size(path: Path) -> str:
     size_in_kb = round(os.path.getsize(path) / 1024)
     return f"~ {size_in_kb} KB"
 
+@ensure_annotations
+def load_best_model_from_json(json_file: Path) -> str:
+    """
+    Loads the best model name from a JSON file based on test_model_score.
 
-def load_best_model_from_json(json_file):
+    Args:
+        json_file (Path): Path to the JSON file.
+
+    Returns:
+        str: Name of the best model.
+    """
     with open(json_file, 'r') as f:
         results = json.load(f)
 
