@@ -51,7 +51,7 @@ def create_directories(path_to_directories: list, verbose=True):
 
 
 @ensure_annotations
-def save_json(path: Path, data: dict):
+def save_json(path: Path, data):
     """save json data
 
     Args:
@@ -59,7 +59,7 @@ def save_json(path: Path, data: dict):
         data (dict): data to be saved in json file
     """
     with open(path, "w") as f:
-        json.dump(data, f, indent=4)
+        json.dump(data, f, default=str, indent=4)
 
     logger.info(f"json file saved at: {path}")
 
@@ -162,20 +162,16 @@ def get_size(path: Path) -> str:
     return f"~ {size_in_kb} KB"
 
 @ensure_annotations
-def load_best_model_from_json(json_file: Path) -> str:
+def load_json(json_file: Path) :
     """
-    Loads the best model name from a JSON file based on test_model_score.
+    Loads  a JSON file
 
     Args:
         json_file (Path): Path to the JSON file.
 
-    Returns:
-        str: Name of the best model.
     """
     with open(json_file, 'r') as f:
         results = json.load(f)
 
-    # Identify the best model based on test_model_score
-    best_model_name = max(results, key=lambda x: results[x]['test_model_score'])
-    return best_model_name
+    return results
 
