@@ -12,7 +12,6 @@ from pathlib import Path
 from typing import Any
 
 
-
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
     """reads yaml file and returns
@@ -36,7 +35,6 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
         raise ValueError("yaml file is empty")
     except Exception as e:
         raise e
-    
 
 
 @ensure_annotations
@@ -65,8 +63,6 @@ def save_json(path: Path, data: dict):
         json.dump(data, f, indent=4)
 
     logger.info(f"json file saved at: {path}")
-
-
 
 
 @ensure_annotations
@@ -99,6 +95,7 @@ def save_bin(data: Any, path: Path):
 
 
 def save_object_pkl(file_path, obj):
+
     try:
         dir_path = os.path.dirname(file_path)
 
@@ -106,6 +103,7 @@ def save_object_pkl(file_path, obj):
 
         with open(file_path, "wb") as file_obj:
             pickle.dump(obj, file_obj)
+        logger.info(f"pickle object saved at {file_path}")
 
     except Exception as e:
         raise e
@@ -135,7 +133,6 @@ def load_bin(path: Path) -> Any:
     return data
 
 
-
 @ensure_annotations
 def get_size(path: Path) -> str:
     """get size in KB
@@ -146,9 +143,15 @@ def get_size(path: Path) -> str:
     Returns:
         str: size in KB
     """
-    size_in_kb = round(os.path.getsize(path)/1024)
+    size_in_kb = round(os.path.getsize(path) / 1024)
     return f"~ {size_in_kb} KB"
 
 
+def load_best_model_from_json(json_file):
+    with open(json_file, 'r') as f:
+        results = json.load(f)
 
+    # Identify the best model based on test_model_score
+    best_model_name = max(results, key=lambda x: results[x]['test_model_score'])
+    return best_model_name
 
