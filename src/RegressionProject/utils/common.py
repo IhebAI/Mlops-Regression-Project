@@ -1,6 +1,6 @@
 import os
 import pickle
-
+import pandas as pd
 from box.exceptions import BoxValueError
 import yaml
 from RegressionProject.logging import logger
@@ -9,6 +9,7 @@ import joblib
 from ensure import ensure_annotations
 from box import ConfigBox
 from pathlib import Path
+from typing import Any
 
 
 @ensure_annotations
@@ -58,7 +59,7 @@ def save_json(path: Path, data):
         path (Path): path to json file
         data (dict): data to be saved in json file
     """
-    with open(path, "w") as f:
+    with open(path, 'w') as f:
         json.dump(data, f, default=str, indent=4)
 
     logger.info(f"json file saved at: {path}")
@@ -82,7 +83,7 @@ def load_json(path: Path) -> ConfigBox:
 
 
 @ensure_annotations
-def save_bin(data, path: Path):
+def save_bin(data: Any, path: Path):
     """save binary file
 
     Args:
@@ -92,15 +93,8 @@ def save_bin(data, path: Path):
     joblib.dump(value=data, filename=path)
     logger.info(f"binary file saved at: {path}")
 
-@ensure_annotations
-def save_object_pkl(file_path, obj):
-    """
-    Saves an object as a pickle file.
 
-    Args:
-        file_path (Path): Path to the pickle file.
-        obj (Any): Object to be saved.
-    """
+def save_object_pkl(file_path, obj):
     try:
         dir_path = os.path.dirname(file_path)
 
@@ -114,17 +108,7 @@ def save_object_pkl(file_path, obj):
         raise e
 
 
-@ensure_annotations
-def load_object_pkl(file_pathpath: Path):
-    """
-    Loads an object from a pickle file.
-
-    Args:
-        file_path (Path): Path to the pickle file.
-
-    Returns:
-        Any: The loaded object.
-    """
+def load_object_pkl(file_path):
     try:
         with open(file_path, "rb") as file_obj:
             return pickle.load(file_obj)
@@ -134,7 +118,7 @@ def load_object_pkl(file_pathpath: Path):
 
 
 @ensure_annotations
-def load_bin(path: Path):
+def load_bin(path: Path) -> Any:
     """load binary data
 
     Args:
@@ -161,17 +145,22 @@ def get_size(path: Path) -> str:
     size_in_kb = round(os.path.getsize(path) / 1024)
     return f"~ {size_in_kb} KB"
 
-@ensure_annotations
-def load_json(json_file: Path) :
-    """
-    Loads  a JSON file
 
-    Args:
-        json_file (Path): Path to the JSON file.
-
-    """
+def load_best_model_from_json(json_file):
     with open(json_file, 'r') as f:
         results = json.load(f)
 
-    return results
+    # Identify the best model based on test_model_score
+    best_model_name = max(results, key=lambda x: results[x]['test_model_score'])
+    return best_model_name
 
+
+def read_transformed_data(transformed_train_data_path, transformed_test_data_path):
+    train_data = pd.read_csv(transformed_train_data_path)
+    test_data = pd.read_csv(transformed_test_data_path)
+    target_column = train_data.columns[-1]
+    train_x = train_data.drop([target_column], axis=1)
+    test_x = test_data.drop([target_column], axis=1)
+    train_y = train_data[target_column].values
+    test_y = test_data[target_column].values
+    return train_x, train_y, test_x, test_y
