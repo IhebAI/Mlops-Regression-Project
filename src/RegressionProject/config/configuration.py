@@ -1,5 +1,6 @@
 from RegressionProject.constants import *
-from RegressionProject.entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
+from RegressionProject.entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, \
+    ModelTrainerConfig
 from RegressionProject.utils.common import read_yaml, create_directories
 
 
@@ -64,3 +65,21 @@ class ConfigurationManager:
         )
 
         return data_transformation_config
+
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        data_transformation_config = self.config.data_transformation
+        train_config = self.config.model_trainer
+
+        create_directories([train_config.root_dir])
+
+        model_trainer_config = ModelTrainerConfig(
+            root_dir=train_config.root_dir,
+            model_name=train_config.model_name,
+            trained_model_file_path=train_config.trained_model_file_path,
+            grid_search_evaluation_result=train_config.grid_search_evaluation_result,
+            transformed_train_data_path=data_transformation_config.transformed_data_train,
+            transformed_test_data_path=data_transformation_config.transformed_data_test
+
+        )
+
+        return model_trainer_config

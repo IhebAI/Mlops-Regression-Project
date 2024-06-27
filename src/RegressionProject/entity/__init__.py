@@ -9,6 +9,7 @@ class DataIngestionConfig:
     local_data_file: Path
     unzip_dir: Path
 
+
 @dataclass(frozen=True)
 class DataValidationConfig:
     root_dir: Path
@@ -29,3 +30,13 @@ class DataTransformationConfig:
     numerical_columns: list
     categorical_columns: list
     target_column: str
+
+
+@dataclass(frozen=True)
+class ModelTrainerConfig:
+    root_dir: Path
+    model_name: str
+    trained_model_file_path: Path
+    grid_search_evaluation_result: Path
+    transformed_train_data_path: Path
+    transformed_test_data_path: Path
