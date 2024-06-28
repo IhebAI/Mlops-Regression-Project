@@ -1,6 +1,6 @@
 from RegressionProject.constants import *
 from RegressionProject.entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, \
-    ModelTrainerConfig
+    ModelTrainerConfig, ModelEvaluationConfig
 from RegressionProject.utils.common import read_yaml, create_directories
 
 
@@ -83,3 +83,27 @@ class ConfigurationManager:
         )
 
         return model_trainer_config
+
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config_model_eval = self.config.model_evaluation
+        config_model_train = self.config.model_trainer
+        config_model_transform = self.config.data_transformation
+
+        params = self.params
+        schema = self.schema.TARGET_COLUMN
+
+        create_directories([config_model_eval.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=config_model_eval.root_dir,
+            metric_file_name=config_model_eval.metric_file_name,
+            mlflow_uri=config_model_eval.mlflow_uri,
+            transformed_data_test=config_model_transform.transformed_data_test,
+            transformed_data_train=config_model_transform.transformed_data_train,
+            model_path=config_model_train.trained_model_file_path,
+            target_column=schema.name,
+
+            all_params=params,
+
+        )
+        return model_evaluation_config

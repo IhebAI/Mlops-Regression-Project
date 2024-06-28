@@ -2,7 +2,8 @@ from pathlib import Path
 
 from RegressionProject.entity import ModelTrainerConfig
 from RegressionProject.logging import logger
-from RegressionProject.utils.common import load_json, save_json, save_object_pkl, load_best_model_from_json
+from RegressionProject.utils.common import load_json, save_json, save_object_pkl, load_best_model_from_json, \
+    read_transformed_data
 
 from sklearn.ensemble import (
     AdaBoostRegressor,

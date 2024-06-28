@@ -40,3 +40,15 @@ class ModelTrainerConfig:
     grid_search_evaluation_result: Path
     transformed_train_data_path: Path
     transformed_test_data_path: Path
+
+
+@dataclass(frozen=True)
+class ModelEvaluationConfig:
+    root_dir: Path
+    metric_file_name: Path
+    mlflow_uri: str
+    transformed_data_test: Path
+    transformed_data_train: Path
+    model_path: Path
+    all_params: dict
+    target_column: str
