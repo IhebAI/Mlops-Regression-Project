@@ -1,22 +1,19 @@
-from pathlib import Path
-
 from RegressionProject.entity import ModelTrainerConfig
-from RegressionProject.logging import logger
-from RegressionProject.utils.common import load_json, save_json, save_object_pkl, load_best_model_from_json, \
-    read_transformed_data
-
+from RegressionProject.utils.common import save_json
+from catboost import CatBoostRegressor
 from sklearn.ensemble import (
     AdaBoostRegressor,
     GradientBoostingRegressor,
     RandomForestRegressor,
 )
+from RegressionProject.logging import logger
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
+from xgboost import XGBRegressor
+from RegressionProject.constants import *
+from RegressionProject.utils.common import load_best_model_from_json, save_object_pkl, read_transformed_data
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
-from xgboost import XGBRegressor
-from catboost import CatBoostRegressor
-import pandas as pd
 
 
 class ModelTrainer:
@@ -76,7 +73,8 @@ class ModelTrainer:
                                                                  transformed_test_data_path)
         model_params = self.prepare_params_models_gs(params)
         results = self.evaluate_models(train_x, train_y, test_x, test_y, model_params)
-        best_model_name = load_best_model_from_json(self.config.grid_search_evaluation_result)
+        best_model_name, _ = load_best_model_from_json(self.config.grid_search_evaluation_result)
         best_model = results[best_model_name]['model']
-        logger.info("Best Model found is : {}".format(best_model))
+        best_model_score = results[best_model_name]['test_model_score']
+        logger.info("Best Model found is : {} with a test score {}".format(best_model_name, best_model_score))
         save_object_pkl(self.config.trained_model_file_path, best_model, )

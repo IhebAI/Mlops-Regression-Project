@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/iheba/IdeaProjects/Mlops-Regression-Project/mlruns/0/df635d4f29d64339a3a534fb8d8beefc/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: df635d4f29d64339a3a534fb8d8beefc
+run_name: stately-kit-96
+run_uuid: df635d4f29d64339a3a534fb8d8beefc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720205863856
+status: 1
+tags: []
+user_id: iheba

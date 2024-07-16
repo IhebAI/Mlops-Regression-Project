@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/iheba/IdeaProjects/Mlops-Regression-Project/mlruns/0/620f7097ca374d8391884281052b6bfc/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 620f7097ca374d8391884281052b6bfc
+run_name: kindly-sponge-526
+run_uuid: 620f7097ca374d8391884281052b6bfc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1720206052609
+status: 1
+tags: []
+user_id: iheba

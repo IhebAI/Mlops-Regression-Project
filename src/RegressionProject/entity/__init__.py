@@ -8,6 +8,8 @@ class DataIngestionConfig:
     source_URL: str
     local_data_file: Path
     unzip_dir: Path
+    expected_hash: str
+    status_file:Path
 
 
 @dataclass(frozen=True)
@@ -52,3 +54,9 @@ class ModelEvaluationConfig:
     model_path: Path
     all_params: dict
     target_column: str
+
+@dataclass(frozen=True)
+class DagsHubConfig:
+    repo_owner: str
+    repo_name: str
+    mlflow: bool

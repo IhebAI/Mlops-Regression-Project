@@ -1,6 +1,6 @@
 from RegressionProject.constants import *
 from RegressionProject.entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, \
-    ModelTrainerConfig, ModelEvaluationConfig
+    ModelTrainerConfig, ModelEvaluationConfig, DagsHubConfig
 from RegressionProject.utils.common import read_yaml, create_directories
 
 
@@ -25,7 +25,9 @@ class ConfigurationManager:
             root_dir=config.root_dir,
             source_URL=config.source_URL,
             local_data_file=config.local_data_file,
-            unzip_dir=config.unzip_dir
+            unzip_dir=config.unzip_dir,
+            expected_hash=config.expected_hash,
+            status_file=config.status_file
         )
 
         return data_ingestion_config
@@ -84,6 +86,16 @@ class ConfigurationManager:
 
         return model_trainer_config
 
+    def get_dags_hub_config(self) -> DagsHubConfig:
+        config_dags_hub = self.config.dags_hub
+
+        dags_hub_config = DagsHubConfig(
+            repo_owner=config_dags_hub.repo_owner,
+            repo_name=config_dags_hub.repo_name,
+            mlflow=config_dags_hub.mlflow,
+        )
+        return dags_hub_config
+
     def get_model_evaluation_config(self) -> ModelEvaluationConfig:
         config_model_eval = self.config.model_evaluation
         config_model_train = self.config.model_trainer
@@ -102,8 +114,6 @@ class ConfigurationManager:
             transformed_data_train=config_model_transform.transformed_data_train,
             model_path=config_model_train.trained_model_file_path,
             target_column=schema.name,
-
             all_params=params,
-
         )
         return model_evaluation_config

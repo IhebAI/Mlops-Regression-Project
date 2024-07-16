@@ -6,12 +6,14 @@ data_ingestion:
   source_URL: https://github.com/IhebAI/Datasets/raw/main/student.zip
   local_data_file: artifacts/data_ingestion/student.zip
   unzip_dir: artifacts/data_ingestion
-
+  expected_hash: "912d8341a3b47f6a5358d7956b75157947058438e8bd24bc2db956863eeaf527"
+  status_file: artifacts/data_ingestion/status.txt
 
 data_validation:
   root_dir: artifacts/data_validation
   unzip_data_dir: artifacts/data_ingestion/student.csv
   STATUS_FILE: artifacts/data_validation/status.txt
+
 
 
 data_transformation:
@@ -26,8 +28,6 @@ data_transformation:
   categorical_columns: [ "gender", "race_ethnicity", "parental_level_of_education", "lunch", "test_preparation_course"]
 
 
-
-
 model_trainer:
   root_dir: artifacts/model_trainer
   model_name: best_model.pkl
@@ -35,12 +35,16 @@ model_trainer:
   grid_search_evaluation_result: artifacts/model_trainer/train_results.json
 
 
-
 model_evaluation:
   root_dir: artifacts/model_evaluation
   metric_file_name: artifacts/model_evaluation/metrics.json
   mlflow_uri: 'https://dagshub.com/iheb.aamrii/Mlops-Regression-Project.mlflow'
 
+
+dags_hub:
+  repo_owner: "iheb.aamrii"
+  repo_name: "Mlops-Regression-Project"
+  mlflow: true
 
 
 

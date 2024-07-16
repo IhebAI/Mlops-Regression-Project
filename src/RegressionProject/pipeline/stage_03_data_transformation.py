@@ -8,7 +8,6 @@ class DataTransformationTrainingPipeline:
     def __init__(self):
         pass
 
-
     def main(self):
         try:
             with open(Path("artifacts/data_validation/status.txt"), "r") as f:
@@ -21,7 +20,7 @@ class DataTransformationTrainingPipeline:
                 data_transformation.run_data_processing_pipeline()
 
             else:
-                raise Exception("You data schema is not valid")
+                exit("You data schema is not valid")
 
         except Exception as e:
             print(e)

@@ -152,7 +152,7 @@ def load_best_model_from_json(json_file):
 
     # Identify the best model based on test_model_score
     best_model_name = max(results, key=lambda x: results[x]['test_model_score'])
-    return best_model_name
+    return best_model_name, results
 
 
 def read_transformed_data(transformed_train_data_path, transformed_test_data_path):

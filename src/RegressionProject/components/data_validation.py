@@ -2,7 +2,7 @@ from RegressionProject.entity import DataValidationConfig
 import pandas as pd
 
 
-class DataValiadtion:
+class DataValidation:
     def __init__(self, config: DataValidationConfig):
         self.config = config
 
@@ -23,7 +23,7 @@ class DataValiadtion:
                 else:
                     validation_status = True
                     with open(self.config.STATUS_FILE, 'w') as f:
-                        f.write(f"Validation status : {validation_status}")
+                        f.write(f"Validation status: {validation_status}")
 
             return validation_status
 
